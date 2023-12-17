@@ -1,11 +1,8 @@
 const app = require('./src/app')
 const PORT = 3001; 
-
-// Ruta de prueba
-app.get('/', (req, res) => {
-  res.send('¡Hola, mundo desde Express!');
-});
+const {sequelize} = require('./src/db')
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  sequelize.sync({ force: false })
+  console.log(`Servidor corriendo en localhost:${PORT}`);
 });
