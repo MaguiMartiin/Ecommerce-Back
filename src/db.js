@@ -26,9 +26,8 @@ Category.belongsToMany(Products, { through: 'ProductsCategory' })
 
 Orders.belongsToMany(Products, { through: 'OrderProducts' });
 Products.belongsToMany(Orders, { through: 'OrderProducts' });
-Orders.belongsTo(Users);
-Users.hasMany(Orders);
+Orders.belongsTo(Users, { foreignKey: 'user_id' });
+Users.hasMany(Orders, { foreignKey: 'user_id' });
 
 
-
-module.exports = {sequelize}
+module.exports = {sequelize, ...sequelize.models}
