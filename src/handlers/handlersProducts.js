@@ -25,7 +25,7 @@ const getIdProductHandler = async (req, res ) => {
 const createProductHandler = async (req, res) => {
     const {name, description, price, stock, image, categoryId } = req.body
     try {
-        const newProduct = await createProduct(name, description, price, stock, image, categoryId)
+        const newProduct = await createProduct(name, description, price, stock, image, categoryId, sizeId, colorId)
         res.status(201).json(newProduct)
     } catch (error) {
         res.status(400).json({error: error.message})

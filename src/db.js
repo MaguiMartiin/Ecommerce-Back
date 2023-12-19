@@ -27,6 +27,7 @@ const { Products, Category, Orders, Users, Color, Size } = sequelize.models
 
 Products.belongsToMany(Category, { through: 'ProductsCategory' })
 Category.belongsToMany(Products, { through: 'ProductsCategory' }) 
+
 Products.belongsToMany(Size, { through: 'ProductSize' });
 Products.belongsToMany(Color, { through: 'ProductColor' });
 
