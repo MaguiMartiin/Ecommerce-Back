@@ -23,7 +23,7 @@ const getIdProductHandler = async (req, res ) => {
 }
 
 const createProductHandler = async (req, res) => {
-    const {name, description, price, stock, image, categoryId } = req.body
+    const {name, description, price, stock, image, categoryId, sizeId, colorId } = req.body
     try {
         const newProduct = await createProduct(name, description, price, stock, image, categoryId, sizeId, colorId)
         res.status(201).json(newProduct)
