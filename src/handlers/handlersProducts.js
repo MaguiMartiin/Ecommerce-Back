@@ -1,19 +1,30 @@
-const { createProduct } = require('../controllers/productControllers')
+const { createProduct, getProductById, getAllProducts, searchProductsByName } = require('../controllers/productControllers')
 
-const getProductsHandler = (req, res ) => {
+const getProductsHandler = async (req, res ) => {
     const {name} = req.query
-    if (name) res.send(`producto ${name}`)
-    else res.send('todos los productos')
+    const results = name ? await searchProductsByName(name) : await getAllProducts()
+    try {
+        if (name) res.status(200).json(results)
+        else res.status(200).json(results)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+    
 }
 
-const getIdProductHandler = (req, res ) => {
+const getIdProductHandler = async (req, res ) => {
     const {id} = req.params 
-    res.send(`este es el detalle del producto ${id}`)
+    try {
+        const productId = await getProductById(id)
+        res.status(200).json(productId)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 }
 
 const createProductHandler = async (req, res) => {
+    const {name, description, price, stock, image, categoryId } = req.body
     try {
-        const {name, description, price, stock, image, categoryId } = req.body
         const newProduct = await createProduct(name, description, price, stock, image, categoryId)
         res.status(201).json(newProduct)
     } catch (error) {
