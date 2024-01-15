@@ -8,6 +8,16 @@ const getAllProducts = async () => {return await Products.findAll({
         through: { attributes: [] },
         attributes: ['name'],
         },
+        {
+            model: Size,
+            through: { attributes: [] },
+            attributes: ['name'],
+        },
+        {
+            model: Color,
+            through: { attributes: [] },
+            attributes: ['name'],
+        },
     ],
 })}
 
