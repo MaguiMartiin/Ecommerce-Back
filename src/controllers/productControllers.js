@@ -1,6 +1,15 @@
 const { Category, Products, Size, Color} = require('../db')
 
-const getAllProducts = async () => {return await Products.findAll({order: [['name', 'ASC']] })}
+const getAllProducts = async () => {return await Products.findAll({
+    order: [['name', 'ASC']], 
+    include: [
+        {
+        model: Category,
+        through: { attributes: [] },
+        attributes: ['name'],
+        },
+    ],
+})}
 
 const searchProductsByName = async (name) => { return await Products.findAll({where: {name:name}})}
 
