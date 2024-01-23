@@ -7,8 +7,8 @@ const routesCategory = require('./routesCategory')
 const routes = Router()
 
 routes.use('/products', routesProducts )
-routes.use('/colors', routesColors )
-routes.use('/sizes', routesSizes)
+//routes.use('/colors', routesColors )
+//routes.use('/sizes', routesSizes)
 routes.use('/categories', routesCategory)
   
 module.exports = routes
