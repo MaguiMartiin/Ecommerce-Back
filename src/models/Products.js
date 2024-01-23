@@ -20,9 +20,14 @@ module.exports = productsModel = (sequelize) => {
             allowNull: false,
         },
         stock:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.ARRAY(DataTypes.JSONB({
+                defaultValue: {
+                    quantity: 0,
+                    color: '',
+                    size: '',
+                }
+            })),
             allowNull: false, 
-            defaultValue: 0
         }, 
         image: {
             type: DataTypes.STRING,
