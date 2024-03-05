@@ -1,13 +1,27 @@
-const {getAllCategories, createCategory} = require('../controllers/categoryControllers')
+const {getAllCategories, createCategory, getProductByCategory} = require('../controllers/categoryControllers')
 
 const getCategoryHandler = async (req, res) => {
+    const {categoryId} = req.query
     try {
-        const category = await getAllCategories()
-        res.status(200).json(category)
+        const results = categoryId ? await getProductByCategory(categoryId) : await getAllCategories()
+       
+        res.status(200).json(results)
     } catch (error) {
         res.status(400).json({error: error.message})
     }
 }
+
+const getCategoryProductHandler = async (req, res) => {
+    const {category} = req.query
+    console.log(category);
+    try {
+        const productCategory = await getProductByCategory(category)
+        res.status(200).json(productCategory)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 
 const createCategoryHandler = async (req, res) => {
     const {name} = req.body
@@ -19,4 +33,4 @@ const createCategoryHandler = async (req, res) => {
     }
 }
 
-module.exports = {getCategoryHandler, createCategoryHandler}
+module.exports = {getCategoryHandler, getCategoryProductHandler, createCategoryHandler}
