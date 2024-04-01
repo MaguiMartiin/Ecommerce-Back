@@ -13,7 +13,13 @@ const getAllProducts = async () => {return await Products.findAll({
 
 const searchProductsByName = async (name) => { return await Products.findAll({where: {name:name}})}
 
-const getProductById = async (id) => { return await Products.findByPk(id)}
+const getProductById = async (id) => { return await Products.findByPk(id, {
+    include: [{
+        model: Category,
+        through: { attributes: [] },
+        attributes: ['name'],
+    }]
+})}
 
 const createProduct = async (name, description, price, stock, image, categoryId ) => {
     const newProduct = await Products.create({
