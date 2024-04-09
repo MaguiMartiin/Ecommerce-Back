@@ -1,4 +1,5 @@
 const { Category, Products } = require('../db')
+const Sequelize = require('sequelize')
 
 const getAllProducts = async () => {return await Products.findAll({
     order: [['name', 'ASC']], 
@@ -11,7 +12,11 @@ const getAllProducts = async () => {return await Products.findAll({
     ],
 })}
 
-const searchProductsByName = async (name) => { return await Products.findAll({where: {name:name}})}
+const searchProductsByName = async (name) => { return await Products.findAll({where: 
+    {name:
+        {[Sequelize.Op.iLike]: `%${name}%` 
+    }}
+})}
 
 const getProductById = async (id) => { return await Products.findByPk(id, {
     include: [{

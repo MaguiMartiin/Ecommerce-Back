@@ -1,27 +1,23 @@
 const {getAllCategories, createCategory, getProductByCategory} = require('../controllers/categoryControllers')
 
 const getCategoryHandler = async (req, res) => {
-    const {categoryId} = req.query
+    const { categoryId, name } = req.query
     try {
-        const results = categoryId ? await getProductByCategory(categoryId) : await getAllCategories()
-       
+        let results
+        if (categoryId) { results = await getProductByCategory(categoryId)
+            if (name) {
+                const filteredProductsCategory = results.filter(product =>
+                    product.name.toLowerCase().includes(name.toLowerCase())
+                )
+                res.status(200).json(filteredProductsCategory);
+                return
+            }
+        } else { results = await getAllCategories()}
         res.status(200).json(results)
     } catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(400).json({ error: error.message })
     }
 }
-
-const getCategoryProductHandler = async (req, res) => {
-    const {category} = req.query
-    console.log(category);
-    try {
-        const productCategory = await getProductByCategory(category)
-        res.status(200).json(productCategory)
-    } catch (error) {
-        res.status(400).json({error: error.message})
-    }
-}
-
 
 const createCategoryHandler = async (req, res) => {
     const {name} = req.body
@@ -33,4 +29,4 @@ const createCategoryHandler = async (req, res) => {
     }
 }
 
-module.exports = {getCategoryHandler, getCategoryProductHandler, createCategoryHandler}
+module.exports = {getCategoryHandler, createCategoryHandler}
