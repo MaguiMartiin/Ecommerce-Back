@@ -7,4 +7,19 @@ const newUser = async (name, email, password) =>  {
     return user
 }
 
-module.exports = { newUser }
+const loginUser = async (email, password) => {
+    const user = await Users.findOne({ where: { email } })
+    const passwordMatch = await bcrypt.compare(password, user.password)
+
+    if (!user) {
+        throw new Error('Email o contraseña incorrectos')
+    }
+
+    if (!passwordMatch) {
+        throw new Error('Email o contraseña incorrectos')
+    }
+
+    return user
+}
+
+module.exports = { newUser, loginUser }

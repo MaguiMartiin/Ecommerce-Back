@@ -1,8 +1,9 @@
 const {Router} = require('express')
-const { createUserHandler } = require('../handlers/handlersUsers')
+const { createUserHandler, loginUserHandler } = require('../handlers/handlersUsers')
 
 const routesUsers = Router()
 
 routesUsers.post('/', createUserHandler )
+routesUsers.post('/login', loginUserHandler)
 
 module.exports = routesUsers
