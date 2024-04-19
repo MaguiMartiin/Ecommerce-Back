@@ -1,5 +1,8 @@
+require("dotenv").config()
 const { Users } = require('../db')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
+const { JWT_SECRET } = process.env;
 
 const newUser = async (name, email, password) =>  {
     const hashedPassword = await bcrypt.hash(password, 10)
@@ -19,7 +22,9 @@ const loginUser = async (email, password) => {
         throw new Error('Email o contraseña incorrectos')
     }
 
-    return user
+    const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' })
+
+    return {user, token}
 }
 
 module.exports = { newUser, loginUser }
