@@ -5,6 +5,10 @@ const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
 
 const newUser = async (name, email, password) =>  {
+    const existingUser = await Users.findOne({ where: { email } })
+    if (existingUser) {
+        throw new Error('Ya existe un usuario registrado con este email')
+    }
     const hashedPassword = await bcrypt.hash(password, 10)
     const user = await Users.create({name, email, password: hashedPassword})
     return user
